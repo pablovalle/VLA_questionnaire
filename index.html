@@ -69,23 +69,24 @@
       box-shadow: 0 0 8px #38f9d7;
     }
 
-    button.login-btn {
-      background: linear-gradient(135deg, #43e97b, #38f9d7);
+    button.login-button {
+      background: linear-gradient(145deg, #7d7d7d, #5a5a5a);
+      color: #f0f0f0;
       border: none;
-      border-radius: 15px;
-      color: white;
-      font-size: 1.2em;
-      font-weight: 700;
-      padding: 14px 40px;
+      border-radius: 8px;
+      padding: 12px 28px;
+      font-size: 16px;
+      font-weight: 600;
+      box-shadow: 4px 4px 8px #4a4a4a, -4px -4px 8px #a0a0a0;
       cursor: pointer;
-      box-shadow: 0 6px 20px rgba(56, 249, 215, 0.6);
       transition: all 0.3s ease;
-      user-select: none;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.4);
     }
-    button.login-btn:hover {
-      background: linear-gradient(135deg, #2ecc71, #1abc9c);
-      box-shadow: 0 8px 25px rgba(26, 188, 156, 0.85);
-      transform: scale(1.05);
+
+    button.login-button:hover {
+      background: linear-gradient(145deg, #8e8e8e, #6a6a6a);
+      box-shadow: 6px 6px 12px #3a3a3a, -6px -6px 12px #b0b0b0;
+      transform: translateY(-2px);
     }
 
     video {
@@ -233,7 +234,7 @@
   <div id="loginForm">
     <h2>Login</h2>
     <input id="usernameInput" placeholder="Username" autocomplete="username" /><br/>
-    <input id="passwordInput" type="password" placeholder="Password" autocomplete="current-password" /><br/><br/>
+    <input id="passwordInput" type="password" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter'){checkLogin();}"/><br/>
     <button class="login-btn" onclick="checkLogin()">Login</button>
     <div id="loginStatus" style="margin-top: 10px; color: #0077cc; font-style: italic;"></div>
   </div>
@@ -292,22 +293,23 @@
       const videoTime = videoElem.currentTime.toFixed(2);
       const username = document.getElementById('usernameInput').value.trim();
       const currentVideo = videoList[currentVideoIndex];
-  
+
       console.log("Answer submitted:", answer, "at video time:", videoTime, "for video:", currentVideo);
-  
-      // Send data to backend (Google Apps Script) via fetch POST
-      fetch('https://script.google.com/macros/s/AKfycbzvAScw8xaM6P9eV0HpqyBRuyYK3mH_OzJb0ADkUJ99v3edkA0B48PTxkKpiHvhRFmY/exec', {
+
+      // Prepare URL-encoded form data to avoid preflight CORS
+      const data = new URLSearchParams();
+      data.append('username', username);
+      data.append('video', currentVideo);
+      data.append('quality', answer);
+      data.append('timestamp', new Date().toISOString());
+      data.append('videoTime', videoTime);
+
+      fetch('https://script.google.com/macros/s/AKfycbxaHahh-vAH82MVXlV_wjgWhH_xJjBP5RFjLdUSOQeK8jFTZ3LKrVXEz9HN26Oncs7O/exec', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          username: username,
-          video: currentVideo,
-          quality: answer,
-          timestamp: new Date().toISOString(),
-          videoTime: videoTime
-        })
+        body: data
+        // NO headers set explicitly here! Let browser set default Content-Type
       }).catch(err => console.error('Error saving response:', err));
-  
+
       currentVideoIndex++;
       if (currentVideoIndex < videoList.length) {
         loadVideo(currentVideoIndex);
