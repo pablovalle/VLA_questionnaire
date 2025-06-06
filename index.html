@@ -267,7 +267,7 @@
   </div>
 
   <script>
-    let videoList = ['135_simulation.mp4', '169_simulation.mp4', '199_simulation.mp4', '284_simulation.mp4', '296_simulation.mp4', '359_simulation.mp4', '372_simulation.mp4', '416_simulation.mp4', '467_simulation.mp4', '486_simulation.mp4', '542_simulation.mp4', '549_simulation.mp4', '565_simulation.mp4', '609_simulation.mp4', '630_simulation.mp4', '660_simulation.mp4', '663_simulation.mp4', '69_simulation.mp4', '70_simulation.mp4', '72_simulation.mp4', '79_simulation.mp4'];
+    let videoList = [];
     let currentVideoIndex = 0;
   
     // Load and play video at current index with fade effect
@@ -350,7 +350,7 @@
     // Start the quiz after login success
     async function startQuiz() {
       try {
-        /*videoList = await fetchVideoListJSONP('handleVideoListResponse_' + Date.now());*/
+        videoList = await fetchVideoListJSONP('handleVideoListResponse_' + Date.now());
         if (!Array.isArray(videoList) || videoList.length === 0) {
           alert('No videos found.');
           return;
