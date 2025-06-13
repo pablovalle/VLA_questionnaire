@@ -337,7 +337,7 @@
         };
   
         const script = document.createElement('script');
-        script.src = `https://script.google.com/macros/s/AKfycbyjpgeSAII7t2oL6gBPTzL84GFzxfPQFcDzRqXBZTx7AoTcO3tws4YfHoEf8PBWMjpr/exec?callback=${callbackName}`;
+        script.src = `https://script.google.com/macros/s/AKfycbxRsBz9hMZYk9UKfdqKmZ74vXPdBp0iXEt4dW2rEDbzMV4jg8eGBvhfWzLQzvZlgvRH/exec?callback=${callbackName}`;
         script.onerror = () => {
           reject(new Error('Failed to load JSONP script'));
           delete window[callbackName];
