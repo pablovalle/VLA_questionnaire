@@ -275,7 +275,7 @@
       const videoElem = document.getElementById('robotVideo');
       videoElem.style.opacity = 0; // fade out
       setTimeout(() => {
-        videoElem.querySelector('source').src = `videos/${videoList[index]}`;
+        videoElem.querySelector('source').src = `${videoList[index]}`;
         videoElem.load();
         videoElem.style.opacity = 1; // fade in
       }, 300);
@@ -351,6 +351,7 @@
     async function startQuiz() {
       try {
         videoList = await fetchVideoListJSONP('handleVideoListResponse_' + Date.now());
+        print(videoList)
         if (!Array.isArray(videoList) || videoList.length === 0) {
           alert('No videos found.');
           return;
