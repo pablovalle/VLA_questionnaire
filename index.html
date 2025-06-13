@@ -351,7 +351,7 @@
     async function startQuiz() {
       try {
         videoList = await fetchVideoListJSONP('handleVideoListResponse_' + Date.now());
-        print(videoList)
+        log(videoList)
         if (!Array.isArray(videoList) || videoList.length === 0) {
           alert('No videos found.');
           return;
