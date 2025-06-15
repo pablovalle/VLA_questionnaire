@@ -288,7 +288,7 @@
         const taskIndex = taskIndexMatch ? parseInt(taskIndexMatch[1], 10) : null;
 
         if (taskIndex !== null) {
-          const response = await fetch(`${folder}/tasks.json`);
+          const response = await fetch(`videos/${folder}/tasks.json`);
           const taskArray = await response.json();
 
           const taskDescription = taskArray[taskIndex] || 'Task not found.';
@@ -298,11 +298,11 @@
         }
       } catch (err) {
         taskElem.textContent = 'Task: Unable to load task.';
-        console.error(`Error loading ${folder}/tasks.json`, err);
+        console.error(`Error loading videos/${folder}/tasks.json`, err);
       }
 
       setTimeout(() => {
-        videoElem.querySelector('source').src = videoPath;
+        videoElem.querySelector('source').src = `videos/${videoPath}`;
         videoElem.load();
         videoElem.style.opacity = 1;
       }, 300);
