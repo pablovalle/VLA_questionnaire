@@ -255,6 +255,9 @@
       Your browser does not support the video tag.
     </video>
 
+    <div id="taskDisplay" style="margin-bottom: 20px; font-size: 1.2em; font-weight: 600; color: #444;"></div>
+
+
     <div id="questionText">
       How did the robot perform the intended task?
     </div>
@@ -271,15 +274,40 @@
     let currentVideoIndex = 0;
   
     // Load and play video at current index with fade effect
-    function loadVideo(index) {
+    async function loadVideo(index) {
       const videoElem = document.getElementById('robotVideo');
+      const taskElem = document.getElementById('taskDisplay');
+      const videoPath = videoList[index];
+      const [folder, filename] = videoPath.split('/');
+      
       videoElem.style.opacity = 0; // fade out
+
+      try {
+        // Extract the task index from the filename (e.g., "100_simulation.mp4" → 100)
+        const taskIndexMatch = filename.match(/^(\d+)_/);
+        const taskIndex = taskIndexMatch ? parseInt(taskIndexMatch[1], 10) : null;
+
+        if (taskIndex !== null) {
+          const response = await fetch(`${folder}/tasks.json`);
+          const taskArray = await response.json();
+
+          const taskDescription = taskArray[taskIndex] || 'Task not found.';
+          taskElem.textContent = `Task: ${taskDescription}`;
+        } else {
+          taskElem.textContent = 'Task: Unknown (invalid filename format)';
+        }
+      } catch (err) {
+        taskElem.textContent = 'Task: Unable to load task.';
+        console.error(`Error loading ${folder}/tasks.json`, err);
+      }
+
       setTimeout(() => {
-        videoElem.querySelector('source').src = `${videoList[index]}`;
+        videoElem.querySelector('source').src = videoPath;
         videoElem.load();
-        videoElem.style.opacity = 1; // fade in
+        videoElem.style.opacity = 1;
       }, 300);
     }
+
   
     // Update progress bar and text
     function updateProgress() {
