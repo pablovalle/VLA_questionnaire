@@ -335,11 +335,11 @@
       data.append('timestamp', new Date().toISOString());
       data.append('videoTime', videoTime);
 
-      console.log(data)
-      fetch('https://script.google.com/macros/s/AKfycbzWC5xK_kJ-GWHdu8Ki1vJgiyR4XOyITtnRtRPNHQb2H49A34REI_MGyRVSLYgRn4de/exec', {
+      fetch('https://script.google.com/macros/s/AKfycbxaHahh-vAH82MVXlV_wjgWhH_xJjBP5RFjLdUSOQeK8jFTZ3LKrVXEz9HN26Oncs7O/exec', {
         method: 'POST',
         body: data
-      });
+        // NO headers set explicitly here! Let browser set default Content-Type
+      }).catch();
 
       currentVideoIndex++;
       if (currentVideoIndex < videoList.length) {
