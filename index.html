@@ -334,21 +334,15 @@
       data.append('quality', answer);
       data.append('timestamp', new Date().toISOString());
       data.append('videoTime', videoTime);
-      fetch('https://script.google.com/macros/s/AKfycbztmV5WHF6eOpm2UORwZ29lFUAmXj6en9YpwPZ3ACQo_XXGvRU4tqg1OJSh9BfIogtZ/exec', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'  // sending JSON
-        },
-        body: JSON.stringify(data),
-        mode: 'cors' // make sure CORS mode is set
-      })
-      .then(response => response.json())
-      .then(result => {
-        console.log('Success:', result);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+      
+
+    fetch(`https://script.google.com/macros/s/https://script.google.com/macros/s/AKfycbzcSy-oeBiqxBvM7CfM7mN_qfsJWVljLQFNWBe3v8rBAkhkjI2ytQASN6EH-oR95t0Q/exec/exec?${data.toString()}`, {
+      method: 'GET',
+      mode: 'cors',
+    })
+    .then(response => response.json())
+    .then(result => console.log('Success:', result))
+    .catch(error => console.error('Error:', error));
       //fetch('https://script.google.com/macros/s/AKfycbztmV5WHF6eOpm2UORwZ29lFUAmXj6en9YpwPZ3ACQo_XXGvRU4tqg1OJSh9BfIogtZ/exec', {
       //  method: 'POST',
        // body: data
