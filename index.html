@@ -336,11 +336,14 @@
       data.append('videoTime', videoTime);
 
       console.log(data)
-      fetch('https://script.google.com/macros/s/AKfycbyDotTlpY5_7eaQ-904ZwUfpn1MiwdjBTF98Rgxc1-MhpiH19I0wlZyp7WXnPzUoIh7/exec', {
+      fetch('https://script.google.com/macros/s/AKfycbwhRPvKNMkjY8HZJpApK6LrlKIqR0_7H97y7zZwi7IKJVNXiy4zQgB8J5YBGX4fHVwX/exec', {
         method: 'POST',
-        body: data
-        // NO headers set explicitly here! Let browser set default Content-Type
-      }).catch();
+        body: data,
+        mode: 'cors' // Optional but helpful
+      })
+      .then(res => res.json())
+      .then(data => console.log('Success:', data))
+      .catch(err => console.error('Error:', err));
 
       currentVideoIndex++;
       if (currentVideoIndex < videoList.length) {
