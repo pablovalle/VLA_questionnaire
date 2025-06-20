@@ -336,14 +336,10 @@
       data.append('videoTime', videoTime);
 
       console.log(data)
-      fetch('https://script.google.com/macros/s/AKfycby4I6H1_ejULx3HSsOC5wVLTmLnR_ZUPZvU1pZQfMkOCFI-_Njqjv-RxB-MYmSIrWGm/exec', {
+      fetch('https://script.google.com/macros/s/AKfycbzWC5xK_kJ-GWHdu8Ki1vJgiyR4XOyITtnRtRPNHQb2H49A34REI_MGyRVSLYgRn4de/exec', {
         method: 'POST',
-        body: data,
-        mode: 'cors' // Optional but helpful
-      })
-      .then(res => res.json())
-      .then(data => console.log('Success:', data))
-      .catch(err => console.error('Error:', err));
+        body: data
+      });
 
       currentVideoIndex++;
       if (currentVideoIndex < videoList.length) {
